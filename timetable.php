@@ -130,7 +130,7 @@
             echo "<td class=\"{$class} trainCode\" rowspan=\"2\">{$train['trainCode']}</td>";
             foreach($stationLists as $station) {
                 if($train[$station[0]][0] && $train[$station[0]][0] != $train[$station[0]][1]) {
-                    echo "<td class=\"arriveTime\">{$train[$station[0]][1]}</td>";
+                    echo "<td class=\"arriveTime\">{$train[$station[0]][0]}</td>";
                 } else {
                     echo "<td rowspan=\"2\" class=\"terminus arriveTime\">{$train[$station[0]][1]}</td>";
                 }
