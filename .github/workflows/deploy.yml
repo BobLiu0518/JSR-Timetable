@@ -1,0 +1,45 @@
+name: Deploy Timetable to GitHub Pages
+
+on:
+    push:
+        branches:
+            - main
+
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        name: Build
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.2'
+            - name: Create directory
+              run: mkdir dist
+            - name: Run fetch.php
+              run: php fetch.php
+            - name: Run timetable.php
+              run: php timetable.php > dist/index.html
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: dist/
+
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        name: Deploy
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        steps:
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
