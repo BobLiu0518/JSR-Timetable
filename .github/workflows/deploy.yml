@@ -25,6 +25,8 @@ jobs:
               run: mkdir dist
             - name: Run fetch.php
               run: php fetch.php
+            - name: Copy data
+              run: cp jsr.json dist/timetable.json
             - name: Run timetable.php
               run: php timetable.php > dist/index.html
             - name: Upload artifact
